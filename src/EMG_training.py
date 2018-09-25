@@ -140,9 +140,9 @@ def evaluateClassifier(argv):
     (featuresAll, MEAN, STD) = aT.normalizeFeatures(featuresAll)
 
     clf = argv[3][1:]
-
+    params = argv[4]
     #bestParam = aT.evaluateclassifier(featuresAll, labelsAll, 1000, clf , [0.05, 0.1, 0.5], 0, perTrain=0.80)
-    bestParam = aT.evaluateclassifier(featuresAll, labelsAll, 1000, clf , [0.05, 0.1, 0.5, 1, 2,3, 5, 10, 15, 20, 25, 50, 100, 200], 0, perTrain=0.80)
+    bestParam = aT.evaluateclassifier(featuresAll, labelsAll, 1000, clf , params, 0, perTrain=0.80)
 
 
     MEAN = MEAN.tolist()
@@ -161,7 +161,7 @@ def evaluateClassifier(argv):
 
 
 
-    print 'Done'
+    print 'Training of',clf,'completed'
 
 
 
@@ -171,3 +171,4 @@ def evaluateClassifier(argv):
 if __name__ == '__main__':
     if sys.argv[1] == "-c":
         evaluateClassifier(sys.argv)
+
