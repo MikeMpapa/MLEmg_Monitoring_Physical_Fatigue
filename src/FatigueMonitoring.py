@@ -83,7 +83,7 @@ def classifyDir(dirName,clf_name,trained_classifier,classNames,MEAN,STD,filter):
 
 
 
-def computeEvalMetrics(CM,clf_name,bestparam):
+def computeEvalMetrics(CM,clf_name,bestparam,fold_id):
 
     CM = CM + 0.0000000010
 
@@ -99,7 +99,7 @@ def computeEvalMetrics(CM,clf_name,bestparam):
     print 'Pre:',Pre,'- AVG Pre:',numpy.mean(Pre)
     print 'Rec:',Rec,'- AVG Rec:',numpy.mean(Rec)
     print 'F1:',F1,'- AVG F1:',numpy.mean(F1)
-    numpy.save(clf_name +"_"+str(bestparam) +"_results.npy", CM)
+    numpy.save(clf_name +"_"+fold_id+"_"+str(bestparam) +"_results.npy", CM)
 
 
 
@@ -118,7 +118,7 @@ def EMG_Train_Test(evaluation_path,classifier,params,filter):
             CM_total = CM
         else:
             CM_total += CM
-    computeEvalMetrics(CM_total,clf_name,bestParam)
+    computeEvalMetrics(CM_total,clf_name,bestParam,fold.split('/')[-1])
 
 
 
@@ -133,9 +133,22 @@ if __name__ == '__main__':
     #evaluateClassifier([None,'-c','../Fatigue_Data/Study1/EMG', '-randomforest',[10, 25, 50, 100,200,500,1000]])
     #evaluateClassifier([None,'-c','../Fatigue_Data/Study1/EMG', '-gradientboosting',[10, 25, 50, 100,200,500,1000]])
     #evaluateClassifier([None,'-c','../Fatigue_Data/Study1/EMG', '-extratrees',[10, 25, 50, 100,200,500,1000],False])
+
+    #EMG_Train_Test('EMGraw_Data_Study1', '-svm',  [0.001, 0.01,  0.5, 1.0, 5.0, 10.0, 20.0],False)
+    EMG_Train_Test('EMGmedian_Data_Study1', '-svm_rbf', [0.001, 0.01,  0.5, 1.0, 5.0, 10.0, 20.0], False)
+    #EMG_Train_Test('EMGmedian_Data_Study1', '-knn', [1, 3, 5, 7, 9, 11, 13, 15],False)
+    #EMG_Train_Test('EMGraw_Data_Study1', '-randomforest',[10, 25, 50, 100,200,500,1000], False)
+    #EMG_Train_Test('EMGmedian_Data_Study1', '-gradientboosting',[10, 25, 50, 100,200,500,1000], False)
+    #EMG_Train_Test('EMGraw_Data_Study1', '-extratrees', [10, 25, 50, 100,200,500,1000], False)
+
+
+    '''
     clfs = ['-svm','-svm_rbf','-knn','-randomforest','-gradientboosting','-extratrees']
     params = [[0.001, 0.01,  0.5, 1.0, 5.0, 10.0, 20.0],[0.001, 0.01,  0.5, 1.0, 5.0, 10.0, 20.0],[1, 3, 5, 7, 9, 11, 13, 15],[10, 25, 50, 100,200,500,1000],[10, 25, 50, 100,200,500,1000],[10, 25, 50, 100,200,500,1000]]
     for i in range(len(clfs)):
         EMG_Train_Test('EMG_Data_Study1',clfs[i],params[i],False)
+        
+    '''
+
 
 
