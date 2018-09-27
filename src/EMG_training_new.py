@@ -48,8 +48,8 @@ def featureExtraction(raw_data,time,gt_labels):
 
     # Assign labels to mid-term windows
 
-    #numOfmtWindows = int(round(len(gt_labels) / round(mtStep * Fs)))
-    numOfmtWindows =  MidTermFeatures.shape[1]
+    numOfmtWindows = int(round(len(gt_labels) / round(mtStep * Fs)))
+    #numOfmtWindows =  MidTermFeatures.shape[1]
     '''
     print numOfmtWindows,MidTermFeatures.shape,
     if MidTermFeatures.shape[1]>numOfmtWindows:
