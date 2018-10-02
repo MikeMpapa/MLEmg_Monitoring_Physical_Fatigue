@@ -85,12 +85,12 @@ def featureExtraction(raw_data,time,gt_labels):
     #emg_features_vectors = []
     duration = float(time[-1]-time[0])
     Fs = round(len(raw_data) / duration)
-
+    '''
     mtWin = 1
     mtStep = 0.25
     stWin = 0.13
     stStep = 0.04
-    '''
+    
     mtWin = 0.5
     mtStep = 0.25
     stWin = 0.2
@@ -101,8 +101,12 @@ def featureExtraction(raw_data,time,gt_labels):
     stWin = 0.5
     stStep = 0.5
     '''
+    mtWin = 5.0
+    mtStep = 1.0
+    stWin = 0.13
+    stStep = 0.04
 
-    [MidTermFeatures, stFeatures] = f1d.mtFeatureExtraction(raw_data, Fs, round(mtWin * Fs), round(mtStep * Fs), round(Fs * stWin), round(Fs * stStep))
+    [MidTermFeatures, stFeatures] = f1d.mtFeatureExtraction(raw_data,Fs, round(mtWin * Fs), round(mtStep * Fs), round(Fs * stWin), round(Fs * stStep))
     [MidTermLabels, stLabels] = mtLabelExtraction(gt_labels, Fs, round(mtWin * Fs), round(mtStep * Fs), round(Fs * stWin), round(Fs * stStep))
 
 

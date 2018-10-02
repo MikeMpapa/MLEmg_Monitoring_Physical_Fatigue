@@ -2,12 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="82518a64-b0a0-4537-b98f-d64868a2c11d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/R_User_Library.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/EMG_training.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EMG_training.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/EMG_training_new.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EMG_training_new.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/FatigueMonitoring.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/FatigueMonitoring.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/FeatureExtraction_1D_new.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/FeatureExtraction_1D_new.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/knn_fold9_1_results.npy" beforeDir="false" afterPath="$PROJECT_DIR$/src/knn_fold9_1_results.npy" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -25,23 +23,23 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="py" value="4" />
+          <entry key="py" value="9" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Python" value="4" />
+          <entry key="Python" value="9" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="Python Console" value="84" />
-          <entry key="py" value="579" />
+          <entry key="Python Console" value="197" />
+          <entry key="py" value="1778" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="663" />
+          <entry key="Python" value="1975" />
         </counts>
       </usages-collector>
     </session>
@@ -51,8 +49,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/FatigueMonitoring.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="366">
-              <caret line="138" column="76" selection-start-line="138" selection-start-column="76" selection-end-line="138" selection-end-column="76" />
+            <state relative-caret-position="264">
+              <caret line="138" column="4" selection-start-line="138" selection-start-column="4" selection-end-line="138" selection-end-column="4" />
               <folding>
                 <element signature="e#0#43#0" expanded="true" />
               </folding>
@@ -63,8 +61,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/EMG_training_new.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-374">
-              <caret line="64" lean-forward="true" selection-start-line="64" selection-end-line="64" />
+            <state relative-caret-position="454">
+              <caret line="109" column="142" lean-forward="true" selection-start-line="109" selection-start-column="142" selection-end-line="109" selection-end-column="142" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -75,17 +73,26 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/FeatureExtraction_1D_new.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-418">
-              <caret line="5" selection-start-line="5" selection-end-line="5" />
+            <state relative-caret-position="293">
+              <caret line="179" column="4" selection-start-line="179" selection-start-column="4" selection-end-line="179" selection-end-column="4" />
               <folding>
                 <element signature="e#0#12#0" expanded="true" />
-                <marker date="1538507296202" expanded="true" signature="72:75" ph="..." />
+                <marker date="1538524559121" expanded="true" signature="72:75" ph="..." />
+                <marker date="1538524559121" expanded="true" signature="6745:6909" ph="..." />
+                <marker date="1538524559121" expanded="true" signature="6924:7020" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
     </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>Flux</find>
+      <find>eps</find>
+      <find>stSpectralCentroidAndSpread</find>
+    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -94,8 +101,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/FatigueMonitoring.py" />
-        <option value="$PROJECT_DIR$/src/FeatureExtraction_1D_new.py" />
         <option value="$PROJECT_DIR$/src/EMG_training_new.py" />
+        <option value="$PROJECT_DIR$/src/FeatureExtraction_1D_new.py" />
       </list>
     </option>
   </component>
@@ -182,6 +189,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1920" y="27" width="1920" height="1053" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Favorites" side_tool="true" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.10779082" />
@@ -192,8 +200,8 @@
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.739083" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.058951966" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.30895197" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.22379912" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -212,18 +220,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/FeatureExtraction_1D_new.py</url>
-          <line>20</line>
-          <option name="timeStamp" value="1" />
+          <line>163</line>
+          <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/src/EMG_training_new.py</url>
-          <line>105</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/src/EMG_training_new.py</url>
-          <line>104</line>
-          <option name="timeStamp" value="5" />
+          <url>file://$PROJECT_DIR$/src/FeatureExtraction_1D_new.py</url>
+          <line>150</line>
+          <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -236,10 +239,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/_pydev_bundle/pydev_monkey_qt.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="97">
+          <caret line="101" selection-start-line="101" selection-end-line="101" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.local/lib/python2.7/site-packages/numpy/core/fromnumeric.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="145">
+          <caret line="2907" selection-start-line="2907" selection-end-line="2907" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/FatigueMonitoring.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="366">
-          <caret line="138" column="76" selection-start-line="138" selection-start-column="76" selection-end-line="138" selection-end-column="76" />
+        <state relative-caret-position="264">
+          <caret line="138" column="4" selection-start-line="138" selection-start-column="4" selection-end-line="138" selection-end-column="4" />
           <folding>
             <element signature="e#0#43#0" expanded="true" />
           </folding>
@@ -248,8 +265,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/EMG_training_new.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-374">
-          <caret line="64" lean-forward="true" selection-start-line="64" selection-end-line="64" />
+        <state relative-caret-position="454">
+          <caret line="109" column="142" lean-forward="true" selection-start-line="109" selection-start-column="142" selection-end-line="109" selection-end-column="142" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
@@ -258,11 +275,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/FeatureExtraction_1D_new.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-418">
-          <caret line="5" selection-start-line="5" selection-end-line="5" />
+        <state relative-caret-position="293">
+          <caret line="179" column="4" selection-start-line="179" selection-start-column="4" selection-end-line="179" selection-end-column="4" />
           <folding>
             <element signature="e#0#12#0" expanded="true" />
-            <marker date="1538507296202" expanded="true" signature="72:75" ph="..." />
+            <marker date="1538524559121" expanded="true" signature="72:75" ph="..." />
+            <marker date="1538524559121" expanded="true" signature="6745:6909" ph="..." />
+            <marker date="1538524559121" expanded="true" signature="6924:7020" ph="..." />
           </folding>
         </state>
       </provider>

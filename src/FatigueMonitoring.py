@@ -138,7 +138,7 @@ if __name__ == '__main__':
     #EMG_Train_Test('EMGmedian_Data_Study1', '-svm_rbf', [0.001, 0.01,  0.5, 1.0, 5.0, 10.0, 20.0], False)
     EMG_Train_Test('../..//Recognise_Fatigue/src/EMG_Data_Study1', '-knn', [1],False)
     #EMG_Train_Test('EMGraw_Data_Study1', '-randomforest',[10, 25, 50, 100,200,500,1000], False)
-    #EMG_Train_Test('../..//Recognise_Fatigue/src/EMG_Data_Study1', '-gradientboosting',[1000], False)
+    #EMG_Train_Test('../..//Recognise_Fatigue/src/EMG_Data_Study2_System1', '-gradientboosting',[100], True)
     #EMG_Train_Test('EMGraw_Data_Study1', '-extratrees', [10, 25, 50, 100,200,500,1000], False)
 
 

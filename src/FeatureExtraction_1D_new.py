@@ -6,7 +6,7 @@ eps = 0.00000001
 
 
 
-def mtFeatureExtraction(signal, Fs, mtWin, mtStep, stWin, stStep):
+def mtFeatureExtraction(signal,Fs, mtWin, mtStep, stWin, stStep):
     """
     Mid-term feature extraction
     """
@@ -14,11 +14,8 @@ def mtFeatureExtraction(signal, Fs, mtWin, mtStep, stWin, stStep):
     mtWinRatio = int(round(mtWin / stStep))
     mtStepRatio = int(round(mtStep / stStep))
 
-    mtFeatures = []
+    stFeatures = stFeatureExtraction2(signal,Fs, stWin, stStep)
 
-    stFeatures = stFeatureExtraction2(signal, Fs, stWin, stStep)
-    #print len(stFeatures),stFeatures[0].shape,(len(signal)/stWin),(len(signal)/round(stStep))
-    #print sys.exit()
     numOfFeatures = len(stFeatures)
     numOfStatistics = 6
 
@@ -68,7 +65,7 @@ def mtFeatureExtraction(signal, Fs, mtWin, mtStep, stWin, stStep):
 
 
 
-def stFeatureExtraction2(signal, Fs, Win, Step):
+def stFeatureExtraction2(signal,Fs, Win, Step):
     """
     This function implements the shor-term windowing process. For each short-term window a set of features is extracted.
     This results to a sequence of feature vectors, stored in a numpy matrix.
@@ -98,11 +95,17 @@ def stFeatureExtraction2(signal, Fs, Win, Step):
     countFrames = 0
     nFFT = Win / 2
 
-    # numOfTimeSpectralFeatures = 16
-    numOfTimeSpectralFeatures = 15 * 2 # each fv cointains 14 features from the current window + 14 features from the previous window
+    Features_per_window = 12
+    numOfTimeSpectralFeatures = Features_per_window * 2 # each fv cointains 14 features from the current window + 14 features from the previous window
+    numOfDeltaFeatures = Features_per_window
+
     totalNumOfFeatures = numOfTimeSpectralFeatures
 
     stFeatures = []
+    stFeaturesDelta = []
+
+
+    prevFV = numpy.zeros((totalNumOfFeatures, 1))
     while (curPos + Win - 1 < N):  # for each short-term window until the end of signal
         countFrames += 1
         x = signal[curPos:curPos + Win]  # get current window
@@ -113,9 +116,13 @@ def stFeatureExtraction2(signal, Fs, Win, Step):
         if countFrames == 1:
             Xprev = X.copy()  # keep previous fft mag (used in spectral flux)
         curFV = numpy.zeros((totalNumOfFeatures, 1))
+        curFVdelta = numpy.zeros((numOfDeltaFeatures, 1))
+
         # curFV[0] = stZCR(x)                              # zero crossing rate
         # curFV[1] = stEnergy(x)                           # short-term energy
         # curFV[2] = stEnergyEntropy(x)                    # short-term entropy of energy
+        #---- TSF ----
+        '''
         curFV[0] = numpy.mean(x)
         curFV[1] = numpy.std(x)
         curFV[2] = numpy.median(x)
@@ -130,25 +137,67 @@ def stFeatureExtraction2(signal, Fs, Win, Step):
         curFV[12] = stSpectralFlux(X, Xprev)  # spectral flux
         curFV[13] = stSpectralRollOff(X, 0.90, Fs)  # spectral rolloff
         curFV[14] = numpy.median(X)
+        '''
+        #--- SF ------
+        curFV[0] = stSpectralEntropy(X)  # spectral entropy
+        curFV[1] = stSpectralFlux(X, Xprev)  # spectral flux
+        curFV[2] = stSpectralRollOff(X, 0.90, Fs)  # spectral rolloff
+        curFV[3] = numpy.median(X)
+        [curFV[4], curFV[5]] = stSpectralCentroidAndSpread(X, Fs)  # spectral centroid and spread
+        curFV[6] = numpy.mean(X)
+        curFV[7] = numpy.min(X)
+        curFV[8] = numpy.max(X)
+        curFV[9] = numpy.std(X)
+        curFV[10] = stMADev(X)
+        curFV[11] = WAMP(x)
 
+
+
+
+        #curFV[6] = stZCR(x)
+
+
+
+        #------DELTAS-------#
         # TODO: TEST DELTA
         if countFrames > 1:
-            curFV[numOfTimeSpectralFeatures / 2::] = curFV[0:numOfTimeSpectralFeatures / 2] - prevFV[
-                                                                                              0:numOfTimeSpectralFeatures / 2]
+            curFV[numOfTimeSpectralFeatures / 2::] = curFV[0:numOfTimeSpectralFeatures / 2] - prevFV[0:numOfTimeSpectralFeatures / 2]
+            curFVdelta = curFV[0:numOfTimeSpectralFeatures / 2] - prevFV[0:numOfTimeSpectralFeatures / 2]
         else:
             curFV[numOfTimeSpectralFeatures / 2::] = curFV[0:numOfTimeSpectralFeatures / 2]
+            curFVdelta = curFV[0:numOfTimeSpectralFeatures / 2]
+
 
         stFeatures.append(curFV)
+        stFeaturesDelta.append(curFVdelta)
+
         prevFV = curFV.copy()
         Xprev = X.copy()
 
     stFeatures = numpy.concatenate(stFeatures, 1)
+    stFeaturesDelta = numpy.concatenate(stFeaturesDelta, 1)
+   # print"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+   # print"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+    #return stFeaturesDelta
+    #sys.exit()
     return stFeatures
 
 
+def WAMP(x):
+    wamp = []
+    for i in range(len(x)):
+        if i >0:
+             if abs(x[i] - x[i-1])>0.0001 : wamp.append(1)
+    swamp = sum(wamp)
+    #print swamp
+
+    return swamp
 
 
 
+def stMADev(X):
+    """Compute the Mean absolute deviation"""
+    return numpy.mean(abs(X - numpy.mean(X)))
 
 
 
