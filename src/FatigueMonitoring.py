@@ -1,5 +1,5 @@
-from EMG_training import evaluateClassifier
-from EMG_training import featureExtraction
+from EMG_training_new import evaluateClassifier
+from EMG_training_new import featureExtraction
 import os
 import glob
 import numpy
@@ -135,10 +135,10 @@ if __name__ == '__main__':
     #evaluateClassifier([None,'-c','../Fatigue_Data/Study1/EMG', '-extratrees',[10, 25, 50, 100,200,500,1000],False])
 
     #EMG_Train_Test('EMGraw_Data_Study1', '-svm',  [0.001, 0.01,  0.5, 1.0, 5.0, 10.0, 20.0],False)
-    EMG_Train_Test('EMGmedian_Data_Study1', '-svm_rbf', [0.001, 0.01,  0.5, 1.0, 5.0, 10.0, 20.0], False)
-    #EMG_Train_Test('EMGmedian_Data_Study1', '-knn', [1, 3, 5, 7, 9, 11, 13, 15],False)
+    #EMG_Train_Test('EMGmedian_Data_Study1', '-svm_rbf', [0.001, 0.01,  0.5, 1.0, 5.0, 10.0, 20.0], False)
+    EMG_Train_Test('../..//Recognise_Fatigue/src/EMG_Data_Study1', '-knn', [1],False)
     #EMG_Train_Test('EMGraw_Data_Study1', '-randomforest',[10, 25, 50, 100,200,500,1000], False)
-    #EMG_Train_Test('EMGmedian_Data_Study1', '-gradientboosting',[10, 25, 50, 100,200,500,1000], False)
+    #EMG_Train_Test('../..//Recognise_Fatigue/src/EMG_Data_Study1', '-gradientboosting',[1000], False)
     #EMG_Train_Test('EMGraw_Data_Study1', '-extratrees', [10, 25, 50, 100,200,500,1000], False)
 
 

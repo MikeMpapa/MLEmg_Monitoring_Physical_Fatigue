@@ -1,7 +1,10 @@
 import numpy
 from scipy.fftpack import fft
+import sys
 
 eps = 0.00000001
+
+
 
 def mtFeatureExtraction(signal, Fs, mtWin, mtStep, stWin, stStep):
     """
@@ -14,6 +17,8 @@ def mtFeatureExtraction(signal, Fs, mtWin, mtStep, stWin, stStep):
     mtFeatures = []
 
     stFeatures = stFeatureExtraction2(signal, Fs, stWin, stStep)
+    #print len(stFeatures),stFeatures[0].shape,(len(signal)/stWin),(len(signal)/round(stStep))
+    #print sys.exit()
     numOfFeatures = len(stFeatures)
     numOfStatistics = 6
 

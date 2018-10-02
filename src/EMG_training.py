@@ -31,8 +31,8 @@ def featureExtraction(raw_data,time,gt_labels):
     #emg_features_vectors = []
     duration = float(time[-1]-time[0])
     Fs = round(len(raw_data) / duration)
-    mtWin = 5.0
-    mtStep = 1.0
+    mtWin = 1.0
+    mtStep = 1
     stWin = 0.5
     stStep = 0.5
 

@@ -4,9 +4,63 @@ import os
 import math
 import matplotlib.pyplot as plt
 import numpy as np
-import FeatureExtraction_1D as f1d
+import FeatureExtraction_1D_new as f1d
 from pyAudioAnalysis import audioTrainTest as aT
 import cPickle
+
+
+
+
+
+def mtLabelExtraction(labels, Fs, mtWin, mtStep, stWin, stStep):
+    mtWinRatio = int(round(mtWin / stStep))
+    mtStepRatio = int(round(mtStep / stStep))
+
+    mtLabels = []
+
+    stLabels = stLabelsExtraction(labels, Fs, stWin, stStep)
+
+    curPos = 0
+    N = len(stLabels)
+    while (curPos < N):
+            N1 = curPos
+            N2 = curPos + mtWinRatio
+            if N2 > N:
+                N2 = N
+            curStLabels = stLabels[N1:N2]
+            if curStLabels.count(0) > curStLabels.count(1):
+                mtLabels.append(0)
+            else:
+                mtLabels.append(1)
+            curPos += mtStepRatio
+
+    return mtLabels, stLabels
+
+
+
+
+def stLabelsExtraction(labels, Fs, Win, Step):
+
+    Win = int(Win)
+    Step = int(Step)
+
+    N = len(labels)  # total number of samples
+    curPos = 0
+    countFrames = 0
+
+    stLabels = []
+    while (curPos + Win - 1 < N):  # for each short-term window until the end of signal
+        countFrames += 1
+        x = labels[curPos:curPos + Win]  # get current window
+
+        if x.count(0) > x.count(1):
+            stLabels.append(0)
+        else:
+            stLabels.append(1)
+
+        curPos = curPos + Step  # update window position
+
+    return stLabels
 
 
 
@@ -32,47 +86,27 @@ def featureExtraction(raw_data,time,gt_labels):
     duration = float(time[-1]-time[0])
     Fs = round(len(raw_data) / duration)
 
+    mtWin = 1
+    mtStep = 0.25
+    stWin = 0.13
+    stStep = 0.04
+    '''
     mtWin = 0.5
     mtStep = 0.25
     stWin = 0.2
     stStep = 0.1
-    '''
+    
     mtWin = 5.0
     mtStep = 1.0
     stWin = 0.5
     stStep = 0.5
     '''
+
     [MidTermFeatures, stFeatures] = f1d.mtFeatureExtraction(raw_data, Fs, round(mtWin * Fs), round(mtStep * Fs), round(Fs * stWin), round(Fs * stStep))
+    [MidTermLabels, stLabels] = mtLabelExtraction(gt_labels, Fs, round(mtWin * Fs), round(mtStep * Fs), round(Fs * stWin), round(Fs * stStep))
 
-    emg_features_vectors = MidTermFeatures.copy()
 
-    # Assign labels to mid-term windows
-
-    numOfmtWindows = int(round(len(gt_labels) / round(mtStep * Fs)))
-    #numOfmtWindows =  MidTermFeatures.shape[1]
-    '''
-    print numOfmtWindows,MidTermFeatures.shape,
-    if MidTermFeatures.shape[1]>numOfmtWindows:
-        numOfmtWindows +=1
-    print numOfmtWindows,MidTermFeatures.shape
-    '''
-    gt_WindowLabels = []
-    cur = 0
-    N = int( round(mtStep * Fs))
-    for w in range(numOfmtWindows):
-            if N > len(gt_labels):
-                N = len(gt_labels) - 1
-            c0 = gt_labels[cur:N].count(0)  # count no Fatigue labels
-            c1 = gt_labels[cur:N].count(1)  # count Fatigue labels
-            #print w,c0,c1, gt_labels[cur:N]
-            if c0 > c1:
-                gt_WindowLabels.append(0)
-            else:
-                gt_WindowLabels.append(1)
-            cur = N
-            N = N + int( round(mtStep * Fs))
-
-    return emg_features_vectors,gt_WindowLabels
+    return   MidTermFeatures.copy(),MidTermLabels
 
 
 
