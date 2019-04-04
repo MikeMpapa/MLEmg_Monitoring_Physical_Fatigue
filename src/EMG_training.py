@@ -10,6 +10,60 @@ import cPickle
 
 
 
+
+
+def mtLabelExtraction(labels, Fs, mtWin, mtStep, stWin, stStep):
+    mtWinRatio = int(round(mtWin / stStep))
+    mtStepRatio = int(round(mtStep / stStep))
+
+    mtLabels = []
+
+    stLabels = stLabelsExtraction(labels, Fs, stWin, stStep)
+
+    curPos = 0
+    N = len(stLabels)
+    while (curPos < N):
+            N1 = curPos
+            N2 = curPos + mtWinRatio
+            if N2 > N:
+                N2 = N
+            curStLabels = stLabels[N1:N2]
+            if curStLabels.count(0) > curStLabels.count(1):
+                mtLabels.append(0)
+            else:
+                mtLabels.append(1)
+            curPos += mtStepRatio
+
+    return mtLabels, stLabels
+
+
+
+
+def stLabelsExtraction(labels, Fs, Win, Step):
+
+    Win = int(Win)
+    Step = int(Step)
+
+    N = len(labels)  # total number of samples
+    curPos = 0
+    countFrames = 0
+
+    stLabels = []
+    while (curPos + Win - 1 < N):  # for each short-term window until the end of signal
+        countFrames += 1
+        x = labels[curPos:curPos + Win]  # get current window
+
+        if x.count(0) > x.count(1):
+            stLabels.append(0)
+        else:
+            stLabels.append(1)
+
+        curPos = curPos + Step  # update window position
+
+    return stLabels
+
+
+
 def showEMGData(data,duration,gt):
 
     Fs = round(len(data) / float(duration))
@@ -27,37 +81,41 @@ def showEMGData(data,duration,gt):
     plt.show()
 
 
-def featureExtraction(raw_data,time,gt_labels):
+def featureExtraction(raw_data,time,gt_labels,mW,mS,sW,sS):
     #emg_features_vectors = []
     duration = float(time[-1]-time[0])
     Fs = round(len(raw_data) / duration)
-    mtWin = 1.0
-    mtStep = 1
+
+    mtWin = mW
+    mtStep = mS
+    stWin = sW
+    stStep = sS
+    '''
+    mtWin = 1
+    mtStep = 0.25
+    stWin = 0.13
+    stStep = 0.04
+    
+    mtWin = 0.5
+    mtStep = 0.25
+    stWin = 0.2
+    stStep = 0.1
+
+    mtWin = 5.0
+    mtStep = 1.0
     stWin = 0.5
     stStep = 0.5
 
-    [MidTermFeatures, stFeatures] = f1d.mtFeatureExtraction(raw_data, Fs, round(mtWin * Fs), round(mtStep * Fs), round(Fs * stWin), round(Fs * stStep))
+    mtWin = 5.0
+    mtStep = 1.0
+    stWin = 0.13
+    stStep = 0.04
+    '''
+    [MidTermFeatures, stFeatures] = f1d.mtFeatureExtraction(raw_data,Fs, round(mtWin * Fs), round(mtStep * Fs), round(Fs * stWin), round(Fs * stStep))
+    [MidTermLabels, stLabels] = mtLabelExtraction(gt_labels, Fs, round(mtWin * Fs), round(mtStep * Fs), round(Fs * stWin), round(Fs * stStep))
 
-    emg_features_vectors = MidTermFeatures.copy()
 
-    # Assign labels to mid-term windows
-    numOfmtWindows = int(round(len(gt_labels) / Fs))
-    gt_WindowLabels = []
-    cur = 0
-    N = int(Fs)
-    for w in range(numOfmtWindows):
-            if N > len(gt_labels):
-                N = len(gt_labels) - 1
-            c0 = gt_labels[cur:N].count(0)  # count no Fatigue labels
-            c1 = gt_labels[cur:N].count(1)  # count Fatigue labels
-            if c0 > c1:
-                gt_WindowLabels.append(0)
-            else:
-                gt_WindowLabels.append(1)
-            cur = N
-            N = N + int(Fs)
-
-    return emg_features_vectors,gt_WindowLabels
+    return MidTermFeatures.copy(),MidTermLabels #, stFeatures,stLabels
 
 
 
@@ -94,7 +152,7 @@ def evaluateClassifier(argv):
 
         #split the sample into the positive and negative classes
         ###
-        feature_vectors,gtWindowLabels = featureExtraction(emg_raw[-1], time[-1],gt_labels[-1])
+        feature_vectors,gtWindowLabels = featureExtraction(emg_raw[-1], time[-1],gt_labels[-1],2,1,0.25,0.25)
 
         for i,w in enumerate(gtWindowLabels):
             if w==0:
@@ -129,19 +187,7 @@ def evaluateClassifier(argv):
     MEAN = MEAN.tolist()
     STD = STD.tolist()
 
-    if clf == 'svm':
-        model = aT.trainSVM(featuresAll, bestParam)
-    elif   clf == 'svm_rbf':
-        model = aT.trainSVM_RBF(featuresAll, bestParam)
-    elif clf == 'extratrees':
-        model = aT.trainExtraTrees(featuresAll, bestParam)
-    elif clf == 'randomforest':
-        model = aT.trainRandomForest(featuresAll, bestParam)
-    elif clf == 'knn':
-        model = aT.trainKNN(featuresAll, bestParam)
-    elif clf == 'gradientboosting':
-        model = aT.trainGradientBoosting(featuresAll, bestParam)
-
+    model =Classify(clf,featuresAll,bestParam)
 
     if save:
         saveClassifier(clf,bestParam,model,MEAN,STD,labelsAll)
@@ -163,6 +209,22 @@ def saveClassifier(clf_name,bestParam,model,MEAN,STD,labelsAll):
     cPickle.dump(labelsAll, fo, protocol=cPickle.HIGHEST_PROTOCOL)
     fo.close()
 
+
+def Classify(clf,featuresAll, bestParam):
+    if clf == 'svm':
+        model = aT.trainSVM(featuresAll, bestParam)
+    elif clf == 'svm_rbf':
+        model = aT.trainSVM_RBF(featuresAll, bestParam)
+    elif clf == 'extratrees':
+        model = aT.trainExtraTrees(featuresAll, bestParam)
+    elif clf == 'randomforest':
+        model = aT.trainRandomForest(featuresAll, bestParam)
+    elif clf == 'knn':
+        model = aT.trainKNN(featuresAll, bestParam)
+    elif clf == 'gradientboosting':
+        model = aT.trainGradientBoosting(featuresAll, bestParam)
+
+    return model
 
 
 if __name__ == '__main__':
