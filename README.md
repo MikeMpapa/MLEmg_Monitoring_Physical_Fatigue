@@ -1,6 +1,8 @@
 # EMG_Fatigue_Monitoring
 Dependencies: 
+
 [pyAudioAnalysis](https://github.com/tyiannak/pyAudioAnalysis)
+
 [Keras](https://keras.io/) - optional for CNN classification
 
 Run to train & evaluate:
