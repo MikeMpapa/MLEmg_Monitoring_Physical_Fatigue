@@ -1,3 +1,16 @@
+## Original Publication
+Papakostas, Michalis, et al. "Physical fatigue detection through EMG wearables and subjective user reports: a machine learning approach towards adaptive rehabilitation." Proceedings of the 12th ACM International Conference on PErvasive Technologies Related to Assistive Environments. ACM, 2019.
+#### Bibtec
+@inproceedings{papakostas2019physical,
+  title={Physical fatigue detection through EMG wearables and subjective user reports: a machine learning approach towards adaptive rehabilitation},
+  author={Papakostas, Michalis and Kanal, Varun and Abujelala, Maher and Tsiakas, Konstantinos and Makedon, Fillia},
+  booktitle={Proceedings of the 12th ACM International Conference on PErvasive Technologies Related to Assistive Environments},
+  pages={475--481},
+  year={2019},
+  organization={ACM}
+}
+
+
 # EMG_Fatigue_Monitoring
 Dependencies: 
 
@@ -30,3 +43,16 @@ python FatigueMonitoring
 5. For questions in the code check the comments 
 
 6. Dataset file format: <user_id>_<exercise_id>_<repetition_id>
+
+
+## Original Publication
+Papakostas, Michalis, et al. "Physical fatigue detection through EMG wearables and subjective user reports: a machine learning approach towards adaptive rehabilitation." Proceedings of the 12th ACM International Conference on PErvasive Technologies Related to Assistive Environments. ACM, 2019.
+#### Bibtec
+@inproceedings{papakostas2019physical,
+  title={Physical fatigue detection through EMG wearables and subjective user reports: a machine learning approach towards adaptive rehabilitation},
+  author={Papakostas, Michalis and Kanal, Varun and Abujelala, Maher and Tsiakas, Konstantinos and Makedon, Fillia},
+  booktitle={Proceedings of the 12th ACM International Conference on PErvasive Technologies Related to Assistive Environments},
+  pages={475--481},
+  year={2019},
+  organization={ACM}
+}
